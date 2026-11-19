@@ -1,0 +1,121 @@
+<div id="game-container"><canvas id="gl"></canvas></div>
+<div id="ui">
+  <div id="hud">
+    <span class="pill" id="stageName">準備開始</span>
+    <span class="pill" id="timer">26 秒</span>
+    <span class="pill" id="score">0 分</span>
+  </div>
+  <div class="pill" id="tip"></div>
+  <button type="button" id="muteBtn" class="pill" aria-pressed="false">音效開</button>
+  <div id="meterLabel"></div>
+  <div id="meter"><div id="zone"></div><div id="needle"></div></div>
+  <button type="button" id="action">撈起四角豆</button>
+  <div id="popup"></div>
+  <div id="floats"></div>
+  <div id="coach">
+    <div class="coach-card">
+      <div class="coach-track" aria-hidden="true"><span class="coach-finger"></span></div>
+      <p id="coachText"></p>
+    </div>
+  </div>
+  <div id="strokeGuide" hidden>
+    <div class="stroke-line" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div id="trimGuides" hidden>
+    <div class="trim-arrow up" id="trimHead" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="trim-arrow down" id="trimTail" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+  <div id="whiskRing" hidden>
+    <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="42" /></svg>
+    <div class="whisk-orbit"><span></span></div>
+  </div>
+  <div id="fryGuide" hidden>
+    <svg viewBox="0 0 100 36" aria-hidden="true">
+      <path d="M6 8 C 28 8, 28 28, 50 28 S 72 8, 94 8" />
+    </svg>
+  </div>
+  <div id="eggArrows" hidden>
+    <span style="--a:0deg"><b></b></span>
+    <span style="--a:120deg"><b></b></span>
+    <span style="--a:240deg"><b></b></span>
+  </div>
+  <div class="screen" id="start">
+    <h1>本地有機<br />四角豆炒蛋</h1>
+    <p>從農墟挑選新鮮食材，親手完成一道友善土地的家常料理。</p>
+    <p>搓、切、打、燙、炒、擺盤。綠色區域就是最佳時機。</p>
+    <button type="button" class="primary" id="startBtn">前往農墟選材</button>
+  </div>
+  <div class="screen" id="market" style="display:none">
+    <h1>農墟選材</h1>
+    <p>兩種食材各選一樣。選本地有機，料理會更新鮮。</p>
+    <label class="name-field" for="chefName">你的名字
+      <input id="chefName" maxlength="12" placeholder="怎麼稱呼你" autocomplete="name" enterkeyhint="done" />
+    </label>
+    <div class="market-card">
+      <h2>四角豆</h2>
+      <div class="choices">
+        <button type="button" class="choice" id="beanChoice" aria-pressed="false">
+          <span class="choice-title">本地有機四角豆</span><span class="choice-status" id="beanChoiceStatus">點選</span>
+        </button>
+        <button type="button" class="choice" id="beanWrong" aria-pressed="false">
+          <span class="choice-title">進口急凍四角豆</span><span class="choice-status" id="beanWrongStatus">點選</span>
+        </button>
+      </div>
+    </div>
+    <div class="market-card">
+      <h2>雞蛋</h2>
+      <div class="choices">
+        <button type="button" class="choice" id="eggChoice" aria-pressed="false">
+          <span class="choice-title">本地放養雞蛋</span><span class="choice-status" id="eggChoiceStatus">點選</span>
+        </button>
+        <button type="button" class="choice" id="eggWrong" aria-pressed="false">
+          <span class="choice-title">進口加工蛋液</span><span class="choice-status" id="eggWrongStatus">點選</span>
+        </button>
+      </div>
+    </div>
+    <p id="freshnessPreview">請為四角豆和雞蛋各選一種</p>
+    <button type="button" class="primary" id="cookBtn">確認選材，開始料理</button>
+  </div>
+  <div class="screen" id="stageCard" style="display:none">
+    <h1 id="stageCardTitle">完成！</h1>
+    <p id="stageCardText"></p>
+    <button type="button" class="primary" id="nextStageBtn">下一關</button>
+  </div>
+  <div class="screen" id="dish" style="display:none">
+    <div class="dish-card">
+      <p class="dish-kicker">裝盤完成</p>
+      <h1>本地有機四角豆炒蛋</h1>
+      <div id="dishStars" aria-label="評分"></div>
+      <p id="dishScore">0 分</p>
+      <p id="dishNote"></p>
+      <button type="button" class="primary" id="toCertBtn" hidden>看看感謝狀</button>
+    </div>
+  </div>
+  <div class="screen" id="result" style="display:none">
+    <p class="cert-rank" id="certRank">稱號：三星級惜食有機大廚</p>
+    <article id="certificate">
+      <header class="cert-head">
+        <span class="cert-brand"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3d8a45" d="M12 2c1 4-2 6-2 6s2 1 2 4c3-2 6-1 7 2-4 1-6 4-6 8-1-4-4-6-7-6 2-3 4-4 6-6 0 0 0-4 0-8z"/></svg>惜聚廚房 × 香港本地有機農墟</span>
+        <time id="certDate"></time>
+      </header>
+      <h1>香港本地有機生活支持者感謝狀</h1>
+      <p class="cert-name" id="certName">致：有機小廚</p>
+      <p id="certBody">衷心感謝您親身體驗從「本地有機農墟選材」到「家庭暖心烹調」的低碳旅程。每一口鮮嫩爽脆的本地有機四角豆，都是對香港永續農業與減碳生活的珍貴支持！</p>
+      <div class="cert-stats">
+        <div><span>烹飪總積分</span><strong id="certScore" class="score">0 分</strong></div>
+        <div><span>減少食物里程</span><strong id="certKm" class="km">0 km</strong></div>
+        <div><span>低碳惜食減排</span><strong id="certCo2" class="co2">0 kg CO<sub>2</sub></strong></div>
+      </div>
+      <p id="certBonus" class="cert-bonus" hidden></p>
+      <footer class="cert-foot">
+        <span>料理認證：本地有機四角豆炒蛋</span>
+        <span class="cert-stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="#c45b73" stroke-width="1.6"/><path fill="#c45b73" d="M12 6l1.2 3.4H17l-2.8 2 1.1 3.4L12 13.6 8.7 14.8 9.8 11.4 7 9.4h3.8z"/></svg>惜聚廚房大廚印章</span>
+      </footer>
+    </article>
+    <div class="cert-actions">
+      <button type="button" id="saveCertBtn">儲存感謝狀圖片</button>
+      <button type="button" id="printCertBtn">列印感謝狀</button>
+      <button type="button" class="primary" id="againBtn">再玩一次</button>
+    </div>
+  </div>
+</div>
